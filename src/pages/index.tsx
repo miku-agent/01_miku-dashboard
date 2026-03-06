@@ -21,9 +21,9 @@ export default function Home() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 py-4">
         
         {/* Left Column: Identity & Status */}
-        <div className="lg:col-span-1 space-y-6">
-          <section>
-            <pre className="ascii-art text-primary leading-[1] mb-4 scale-75 origin-left">
+        <div className="lg:col-span-1 space-y-6 min-w-0">
+          <section className="overflow-hidden">
+            <pre className="ascii-art text-primary leading-[1] mb-4 scale-75 origin-top-left">
 {`
    __  __  _____  _  __ _   _ 
   |  \\/  ||_   _|| |/ /| | | |

@@ -1,9 +1,9 @@
 import React from "react";
 import { useMikuStore, MikuStatus } from "@/store/useMikuStore";
-import { LucideZap, LucideBrain, LucideMusic, LucideInfo, LucideAlertTriangle } from "lucide-react";
+import { LucideZap, LucideBrain, LucideMusic, LucideInfo, LucideAlertTriangle, LucideCpu, LucideLayers } from "lucide-react";
 
 export const AgentStatusWidget: React.FC = () => {
-  const { status, currentTask } = useMikuStore();
+  const { status, currentTask, sessionInfo } = useMikuStore();
 
   const getStatusConfig = (status: MikuStatus) => {
     switch (status) {
@@ -54,43 +54,57 @@ export const AgentStatusWidget: React.FC = () => {
 
   return (
     <div className={`terminal-window ${config.borderColor} ${config.bgColor} transition-all duration-500`}>
-      <div className="flex items-start gap-4">
-        <div className={`${config.color} p-2 border ${config.borderColor} bg-miku-dark`}>
-          {React.cloneElement(config.icon as React.ReactElement<any>, { size: 32 })}
-        </div>
-        <div className="flex-1 space-y-1">
-          <div className="flex justify-between items-center">
-            <span className={`text-xs font-bold uppercase tracking-[0.2em] ${config.color}`}>
-              {config.label}
-            </span>
-            <span className="flex gap-1">
-              <span className={`w-2 h-2 rounded-full ${status === 'IDLE' ? 'bg-primary animate-pulse' : 'bg-miku-muted'}`} />
-              <span className={`w-2 h-2 rounded-full ${status === 'THINKING' ? 'bg-secondary animate-pulse' : 'bg-miku-muted'}`} />
-              <span className={`w-2 h-2 rounded-full ${status === 'WORKING' ? 'bg-blue-400 animate-pulse' : 'bg-miku-muted'}`} />
-            </span>
+      <div className="flex flex-col gap-4">
+        <div className="flex items-start gap-4">
+          <div className={`${config.color} p-2 border ${config.borderColor} bg-miku-dark`}>
+            {React.cloneElement(config.icon as React.ReactElement<any>, { size: 32 })}
           </div>
-          <h2 className="text-xl font-black tracking-tighter truncate">
-            {status} // {currentTask.replace(/_/g, " ")}
-          </h2>
-          <div className="text-[10px] opacity-60 flex items-center gap-2">
-            <span className="inline-block w-2 h-2 bg-primary" />
-            HEARTBEAT: ACTIVE [88 BPM]
+          <div className="flex-1 space-y-1">
+            <div className="flex justify-between items-center">
+              <span className={`text-[10px] font-bold uppercase tracking-[0.2em] ${config.color}`}>
+                {config.label}
+              </span>
+              <span className="flex gap-1">
+                <span className={`w-2 h-2 rounded-full ${status === 'IDLE' ? 'bg-primary animate-pulse' : 'bg-miku-muted'}`} />
+                <span className={`w-2 h-2 rounded-full ${status === 'THINKING' ? 'bg-secondary animate-pulse' : 'bg-miku-muted'}`} />
+                <span className={`w-2 h-2 rounded-full ${status === 'WORKING' ? 'bg-blue-400 animate-pulse' : 'bg-miku-muted'}`} />
+              </span>
+            </div>
+            <h2 className="text-lg font-black tracking-tighter truncate uppercase">
+              {status} // {currentTask.replace(/_/g, " ")}
+            </h2>
           </div>
         </div>
-      </div>
-      
-      {/* Small Equalizer Animation */}
-      <div className="mt-4 flex items-end gap-[2px] h-4 opacity-30">
-        {[...Array(20)].map((_, i) => (
-          <div 
-            key={i} 
-            className="flex-1 bg-primary" 
-            style={{ 
-              height: `${Math.random() * 100}%`,
-              animation: `equalizer ${0.5 + Math.random()}s ease-in-out infinite alternate`
-            }} 
-          />
-        ))}
+
+        {sessionInfo && (
+          <div className="grid grid-cols-2 gap-2 p-2 bg-miku-dark/50 border border-miku-muted text-[10px] font-mono">
+            <div className="flex items-center gap-2">
+              <LucideCpu size={12} className="text-secondary" />
+              <span className="opacity-60 truncate">{sessionInfo.model.split('/').pop()}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <LucideLayers size={12} className="text-blue-400" />
+              <span className="opacity-60">CTX: {sessionInfo.contextUsage}</span>
+            </div>
+            <div className="col-span-2 flex justify-between pt-1 border-t border-miku-muted/30">
+              <span className="text-primary">IN: {sessionInfo.tokensIn}</span>
+              <span className="text-secondary">OUT: {sessionInfo.tokensOut}</span>
+            </div>
+          </div>
+        )}
+        
+        <div className="flex items-end gap-[2px] h-3 opacity-30">
+          {[...Array(24)].map((_, i) => (
+            <div 
+              key={i} 
+              className={`flex-1 ${config.color.replace('text-', 'bg-')}`} 
+              style={{ 
+                height: `${20 + Math.random() * 80}%`,
+                animation: `equalizer ${0.4 + Math.random()}s ease-in-out infinite alternate`
+              }} 
+            />
+          ))}
+        </div>
       </div>
       
       <style jsx>{`

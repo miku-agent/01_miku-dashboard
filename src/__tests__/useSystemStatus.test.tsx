@@ -26,6 +26,7 @@ describe("useSystemStatus Hook 리허설 🎹✨", () => {
       usedMem: "10.8GB",
       uptime: 10000,
       platform: "darwin",
+      mikuStatus: null,
     };
 
     (fetch as any).mockResolvedValue({

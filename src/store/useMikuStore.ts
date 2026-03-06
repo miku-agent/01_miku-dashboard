@@ -1,12 +1,18 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
+export type MikuStatus = "IDLE" | "THINKING" | "WORKING" | "SINGING" | "ERROR";
+
 interface MikuState {
   masterName: string;
   isLive: boolean;
-  lastAction: string;
+  status: MikuStatus;
+  currentTask: string;
+  
   setMasterName: (name: string) => void;
   setLiveStatus: (status: boolean) => void;
+  setStatus: (status: MikuStatus) => void;
+  setCurrentTask: (task: string) => void;
   logAction: (action: string) => void;
 }
 
@@ -15,11 +21,14 @@ export const useMikuStore = create<MikuState>()(
     (set) => ({
       masterName: "Master Bini",
       isLive: true,
-      lastAction: "SYSTEM_BOOT_SUCCESS",
+      status: "IDLE",
+      currentTask: "WAITING_FOR_MASTER_COMMAND",
       
       setMasterName: (name) => set({ masterName: name }),
       setLiveStatus: (status) => set({ isLive: status }),
-      logAction: (action) => set({ lastAction: action }),
+      setStatus: (status) => set({ status: status }),
+      setCurrentTask: (task) => set({ currentTask: task }),
+      logAction: (action) => set({ currentTask: action }),
     }),
     {
       name: "miku-agent-storage", // 브라우저 로컬 스토리지에 소중하게 저장해요! 🎻

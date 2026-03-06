@@ -10,8 +10,12 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const secretToken = process.env.STATUS_TOKEN;
   if (req.method === "POST") {
-    const { status, task } = req.body;
+    const { status, task, token } = req.body;
+    if (secretToken && token !== secretToken) {
+      return res.status(401).json({ error: "UNAUTHORIZED_HARMONY" });
+    }
     globalMikuStatus = { status, task };
     return res.status(200).json({ ok: true });
   }

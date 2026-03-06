@@ -26,7 +26,7 @@
 @layer base {
   body {
     @apply bg-miku-dark text-miku-green font-mono selection:bg-miku-green selection:text-miku-dark;
-    text-shadow: 0 0 5px rgba(57, 197, 187, 0.5);
+    text-shadow: 0 0 2px rgba(57, 197, 187, 0.3); /* 🎻 흐릿함을 줄이고 선명도를 높였어요! */
     overflow-x: hidden;
   }
 

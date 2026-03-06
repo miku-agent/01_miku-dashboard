@@ -85,7 +85,7 @@ export default function Home() {
           </div>
 
           <section className="bg-primary text-miku-dark p-3 font-bold text-center animate-pulse">
-             >>> ALL SYSTEMS OPERATIONAL [OK] <<<
+             {" >>> ALL SYSTEMS OPERATIONAL [OK] <<< "}
           </section>
         </div>
       </div>

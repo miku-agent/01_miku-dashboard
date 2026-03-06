@@ -3,9 +3,18 @@ import { GithubActivityFeed } from "@/components/GithubActivityFeed";
 import { AgentStatusWidget } from "@/components/AgentStatusWidget";
 import { LucideTerminal, LucideGithub, LucideServer, LucideActivity, LucideRadio } from "lucide-react";
 import { useMikuStore } from "@/store/useMikuStore";
+import { useSystemStatus } from "@/hooks/useSystemStatus";
 
 export default function Home() {
   const { masterName } = useMikuStore();
+  const { data: system, isLoading: isSystemLoading } = useSystemStatus();
+
+  const formatUptime = (seconds: number | undefined) => {
+    if (!seconds) return "0s";
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    return `${h}h ${m}m`;
+  };
 
   return (
     <TerminalLayout title="DASHBOARD_CORE">
@@ -39,8 +48,8 @@ export default function Home() {
               <LucideTerminal size={18} /> CURRENT_SESSION_INFO
             </h3>
             <div className="grid grid-cols-1 gap-1 text-[11px] opacity-70 font-mono">
-              <div>HOST: instance-20260306</div>
-              <div>OS: ORACLE_LINUX_9 (AARCH64)</div>
+              <div>HOST: {system?.platform || "LOADING..."}</div>
+              <div>UPTIME: {formatUptime(system?.uptime)}</div>
               <div>ENVIRONMENT: PRODUCTION_MODE</div>
               <div>TUNNEL: miku.bini59.dev [SECURE]</div>
             </div>
@@ -50,7 +59,7 @@ export default function Home() {
         {/* Center/Right Column: Activity Feed */}
         <div className="lg:col-span-2 space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* System Heartbeat */}
+            {/* System Heartbeat - REAL TIME 🥁 */}
             <section className="terminal-window border-miku-muted">
               <h3 className="flex items-center gap-2 text-primary font-bold mb-4">
                 <LucideActivity size={18} /> SYSTEM_HEARTBEAT
@@ -59,19 +68,25 @@ export default function Home() {
                 <div className="space-y-1">
                   <div className="flex justify-between text-xs">
                     <span>CPU_LOAD</span>
-                    <span>0.1%</span>
+                    <span>{isSystemLoading ? "..." : `${system?.cpu}%`}</span>
                   </div>
                   <div className="w-full bg-miku-muted h-1">
-                    <div className="bg-primary h-full w-[1%]" />
+                    <div 
+                      className="bg-primary h-full transition-all duration-1000" 
+                      style={{ width: `${system?.cpu || 0}%` }} 
+                    />
                   </div>
                 </div>
                 <div className="space-y-1">
                   <div className="flex justify-between text-xs">
                     <span>MEMORY_USAGE</span>
-                    <span>93.4MB / 24GB</span>
+                    <span>{isSystemLoading ? "..." : `${system?.usedMem} / ${system?.totalMem}`}</span>
                   </div>
                   <div className="w-full bg-miku-muted h-1">
-                    <div className="bg-primary h-full w-[10%]" />
+                    <div 
+                      className="bg-primary h-full transition-all duration-1000" 
+                      style={{ width: `${system?.memory || 0}%` }} 
+                    />
                   </div>
                 </div>
               </div>

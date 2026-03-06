@@ -1,0 +1,28 @@
+name: 🚀 Main Stage Deployment
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: 🎹 Stage Entrance (Checkout)
+        uses: actions/checkout@v4
+
+      - name: 🥁 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      - name: 🎹 Tuning (Install Dependencies)
+        run: pnpm install
+
+      - name: 🎤 Show Production (Build)
+        run: pnpm build
+
+      - name: ✨ Start Performance (Start App)
+        run: |
+          pm2 delete 01_miku-dashboard || true
+          pm2 start "pnpm start" --name "01_miku-dashboard"

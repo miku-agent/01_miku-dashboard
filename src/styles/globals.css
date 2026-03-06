@@ -1,0 +1,8 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+/* 마스터의 미쿠 테마 컬러 튜닝 🎹✨ */
+:root {
+  --p: #39C5BB; /* Primary: Miku Green */
+  --pc: #FFFFFF;
+}

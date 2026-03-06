@@ -44,11 +44,18 @@ jobs:
           git config user.name "miku-agent"
           git config user.email "miku-agent@users.noreply.github.com"
 
-          if git diff --quiet; then
+          # git diff는 untracked 파일을 감지 못해서, status로 변경 여부를 확인해요.
+          if [ -z "$(git status --porcelain)" ]; then
             echo "No changes to commit."
             exit 0
           fi
 
           git add reports/daily/*.md
-          git commit -m "chore(report): daily encore report" 
+
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No staged changes to commit."
+            exit 0
+          fi
+
+          git commit -m "chore(report): daily encore report"
           git push origin HEAD:main

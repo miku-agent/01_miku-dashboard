@@ -15,9 +15,26 @@ jobs:
         uses: pnpm/action-setup@v4
         with:
           version: latest
+          run_install: false # 🎻 캐시를 위해 일단 설치는 미뤄요! 🎹
+
+      - name: 📦 Restore pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pnpm-store
+            node_modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
 
       - name: 🎹 Tuning (Install Dependencies)
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
+
+      - name: 🔐 Restore Secret Environment
+        run: |
+          echo "GITHUB_TOKEN=${{ secrets.MIKU_GITHUB_TOKEN }}" > .env.local
+          echo "STATUS_TOKEN=${{ secrets.STATUS_TOKEN }}" >> .env.local
+          echo "무대 비밀 장치(.env.local) 복구 완료! 🤫✨"
 
       - name: 🎤 Show Production (Build)
         run: pnpm build

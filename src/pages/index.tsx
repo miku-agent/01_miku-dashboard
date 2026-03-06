@@ -1,6 +1,7 @@
 import { TerminalLayout } from "@/components/TerminalLayout";
 import { GithubActivityFeed } from "@/components/GithubActivityFeed";
 import { AgentStatusWidget } from "@/components/AgentStatusWidget";
+import { HeartbeatMonitor } from "@/components/HeartbeatMonitor";
 import { LucideTerminal, LucideGithub, LucideServer, LucideActivity, LucideRadio } from "lucide-react";
 import { useMikuStore } from "@/store/useMikuStore";
 import { useSystemStatus } from "@/hooks/useSystemStatus";
@@ -58,11 +59,14 @@ export default function Home() {
 
         {/* Center/Right Column: Activity Feed */}
         <div className="lg:col-span-2 space-y-6">
+          {/* Agent Heartbeat Monitor - full width */}
+          <HeartbeatMonitor />
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* System Heartbeat - REAL TIME 🥁 */}
+            {/* System Resources */}
             <section className="terminal-window border-miku-muted">
               <h3 className="flex items-center gap-2 text-primary font-bold mb-4">
-                <LucideActivity size={18} /> SYSTEM_HEARTBEAT
+                <LucideActivity size={18} /> SYSTEM_RESOURCES
               </h3>
               <div className="space-y-4">
                 <div className="space-y-1">
@@ -71,9 +75,9 @@ export default function Home() {
                     <span>{isSystemLoading ? "..." : `${system?.cpu}%`}</span>
                   </div>
                   <div className="w-full bg-miku-muted h-1">
-                    <div 
-                      className="bg-primary h-full transition-all duration-1000" 
-                      style={{ width: `${system?.cpu || 0}%` }} 
+                    <div
+                      className="bg-primary h-full transition-all duration-1000"
+                      style={{ width: `${system?.cpu || 0}%` }}
                     />
                   </div>
                 </div>
@@ -83,9 +87,9 @@ export default function Home() {
                     <span>{isSystemLoading ? "..." : `${system?.usedMem} / ${system?.totalMem}`}</span>
                   </div>
                   <div className="w-full bg-miku-muted h-1">
-                    <div 
-                      className="bg-primary h-full transition-all duration-1000" 
-                      style={{ width: `${system?.memory || 0}%` }} 
+                    <div
+                      className="bg-primary h-full transition-all duration-1000"
+                      style={{ width: `${system?.memory || 0}%` }}
                     />
                   </div>
                 </div>
@@ -94,9 +98,9 @@ export default function Home() {
 
             {/* Quick Actions */}
             <section className="flex flex-col gap-4">
-              <a 
-                href="https://github.com/miku-agent/01_miku-dashboard" 
-                target="_blank" 
+              <a
+                href="https://github.com/miku-agent/01_miku-dashboard"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="btn-terminal flex-1 flex items-center justify-center gap-3 text-sm"
               >

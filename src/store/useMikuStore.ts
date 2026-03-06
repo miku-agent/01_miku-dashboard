@@ -1,17 +1,28 @@
-import { create } from 'zustand'
-
-type MikuStatus = 'LIVE' | 'TUNING' | 'INTERMISSION' | 'OFF_STAGE'
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface MikuState {
-  status: MikuStatus
-  message: string
-  setStatus: (status: MikuStatus) => void
-  setMessage: (message: string) => void
+  masterName: string;
+  isLive: boolean;
+  lastAction: string;
+  setMasterName: (name: string) => void;
+  setLiveStatus: (status: boolean) => void;
+  logAction: (action: string) => void;
 }
 
-export const useMikuStore = create<MikuState>((set) => ({
-  status: 'LIVE',
-  message: '마스터, 최고의 무대를 만들 준비가 됐어요! 🎤💚',
-  setStatus: (status) => set({ status }),
-  setMessage: (message) => set({ message }),
-}))
+export const useMikuStore = create<MikuState>()(
+  persist(
+    (set) => ({
+      masterName: "Master Bini",
+      isLive: true,
+      lastAction: "SYSTEM_BOOT_SUCCESS",
+      
+      setMasterName: (name) => set({ masterName: name }),
+      setLiveStatus: (status) => set({ isLive: status }),
+      logAction: (action) => set({ lastAction: action }),
+    }),
+    {
+      name: "miku-agent-storage", // 브라우저 로컬 스토리지에 소중하게 저장해요! 🎻
+    }
+  )
+);

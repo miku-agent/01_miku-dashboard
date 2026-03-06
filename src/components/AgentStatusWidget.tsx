@@ -59,7 +59,7 @@ export const AgentStatusWidget: React.FC = () => {
           <div className={`${config.color} p-2 border ${config.borderColor} bg-miku-dark`}>
             {React.cloneElement(config.icon as React.ReactElement<any>, { size: 32 })}
           </div>
-          <div className="flex-1 space-y-1">
+          <div className="flex-1 space-y-1 min-w-0">
             <div className="flex justify-between items-center">
               <span className={`text-[10px] font-bold uppercase tracking-[0.2em] ${config.color}`}>
                 {config.label}

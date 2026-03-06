@@ -1,8 +1,74 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-/* 마스터의 미쿠 테마 컬러 튜닝 🎹✨ */
+@theme {
+  --font-mono: "JetBrains Mono", "Fira Code", "VT323", monospace;
+  
+  --color-miku-green: #39C5BB;
+  --color-miku-dark: #0a0a0a;
+  --color-miku-muted: #1f521f;
+  
+  --animate-blink: blink 1s step-end infinite;
+  
+  @keyframes blink {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
+  }
+}
+
 :root {
-  --p: #39C5BB; /* Primary: Miku Green */
-  --pc: #FFFFFF;
+  --p: #39C5BB;
+  --pc: #0a0a0a;
+  --b1: #0a0a0a;
+  --bc: #39C5BB;
+}
+
+@layer base {
+  body {
+    @apply bg-miku-dark text-miku-green font-mono selection:bg-miku-green selection:text-miku-dark;
+    text-shadow: 0 0 5px rgba(57, 197, 187, 0.5);
+    overflow-x: hidden;
+  }
+
+  /* CRT Scanline Effect Overlay */
+  body::before {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 9999;
+    background-size: 100% 4px, 3px 100%;
+    pointer-events: none;
+  }
+
+  h1, h2, h3, h4 {
+    @apply uppercase tracking-tighter;
+  }
+}
+
+@layer components {
+  .terminal-window {
+    @apply border border-miku-green p-4 relative bg-miku-dark;
+  }
+
+  .terminal-header {
+    @apply border-b border-miku-green mb-4 pb-2 flex justify-between items-center bg-miku-green text-miku-dark px-2 font-bold;
+  }
+
+  .cursor {
+    @apply inline-block w-2 h-5 bg-miku-green align-middle animate-blink ml-1;
+  }
+
+  .btn-terminal {
+    @apply border border-miku-green px-4 py-1 hover:bg-miku-green hover:text-miku-dark transition-colors duration-200 uppercase font-bold;
+  }
+
+  .ascii-art {
+    @apply whitespace-pre font-mono leading-none text-xs md:text-sm;
+  }
 }

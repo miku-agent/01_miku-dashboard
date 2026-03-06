@@ -10,7 +10,7 @@ export const TerminalLayout: React.FC<LayoutProps> = ({ children, title = "SYSTE
   return (
     <div className="min-h-screen p-4 md:p-8 flex flex-col">
       <Head>
-        <title>MIKU-OS // {title}</title>
+        <title>{`MIKU-OS // ${title}`}</title>
       </Head>
 
       {/* Main Terminal Frame */}

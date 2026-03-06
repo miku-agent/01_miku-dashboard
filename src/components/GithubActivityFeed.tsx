@@ -36,7 +36,12 @@ export const GithubActivityFeed: React.FC = () => {
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
-    return date.toISOString().replace("T", " ").slice(0, 19);
+    // GitHub 이벤트 시간(created_at)은 UTC라서, 대시보드에서는 로컬(KST)로 보여줘요.
+    // sv-SE는 `YYYY-MM-DD HH:mm:ss` 형태라 터미널 UI에 잘 맞습니다.
+    return date.toLocaleString("sv-SE", {
+      timeZone: "Asia/Seoul",
+      hour12: false,
+    });
   };
 
   return (

@@ -70,7 +70,7 @@ export const AgentStatusWidget: React.FC = () => {
                 <span className={`w-2 h-2 rounded-full ${status === 'WORKING' ? 'bg-blue-400 animate-pulse' : 'bg-miku-muted'}`} />
               </span>
             </div>
-            <h2 className="text-lg font-black tracking-tighter truncate uppercase">
+            <h2 className="text-sm sm:text-base font-bold tracking-tight break-words uppercase leading-tight">
               {status} // {currentTask.replace(/_/g, " ")}
             </h2>
           </div>

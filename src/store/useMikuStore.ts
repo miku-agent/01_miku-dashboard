@@ -31,7 +31,7 @@ export const useMikuStore = create<MikuState>()(
       logAction: (action) => set({ currentTask: action }),
     }),
     {
-      name: "miku-agent-storage",
+      name: "miku-agent-storage", // 브라우저 로컬 스토리지에 소중하게 저장해요! 🎻
     }
   )
 );

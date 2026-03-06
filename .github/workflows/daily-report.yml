@@ -40,9 +40,14 @@ jobs:
           fi
 
       - name: 🎤 Commit & push
+        env:
+          PUSH_TOKEN: ${{ secrets.MIKU_GITHUB_TOKEN }}
         run: |
           git config user.name "miku-agent"
           git config user.email "miku-agent@users.noreply.github.com"
+
+          # self-hosted runner에서 main에 push하려면 PAT를 사용해 origin을 재설정합니다.
+          git remote set-url origin "https://x-access-token:${PUSH_TOKEN}@github.com/miku-agent/01_miku-dashboard.git"
 
           # git diff는 untracked 파일을 감지 못해서, status로 변경 여부를 확인해요.
           if [ -z "$(git status --porcelain)" ]; then

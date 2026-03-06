@@ -1,0 +1,54 @@
+name: 🎷 Daily Encore Report
+
+on:
+  schedule:
+    # KST 00:00 == UTC 15:00 (previous day)
+    - cron: "0 15 * * *"
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "Target date (KST) in YYYY-MM-DD"
+        required: false
+
+jobs:
+  report:
+    runs-on: self-hosted
+    steps:
+      - name: 🎹 Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🥁 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+          run_install: false
+
+      - name: 📦 Install deps
+        run: pnpm install --frozen-lockfile
+
+      - name: 🎷 Generate report
+        env:
+          GITHUB_TOKEN: ${{ secrets.MIKU_GITHUB_TOKEN }}
+        run: |
+          DATE_INPUT='${{ inputs.date }}'
+          if [ -n "$DATE_INPUT" ]; then
+            node scripts/generate-daily-report.mjs "$DATE_INPUT"
+          else
+            node scripts/generate-daily-report.mjs
+          fi
+
+      - name: 🎤 Commit & push
+        run: |
+          git config user.name "miku-agent"
+          git config user.email "miku-agent@users.noreply.github.com"
+
+          if git diff --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git add reports/daily/*.md
+          git commit -m "chore(report): daily encore report" 
+          git push origin HEAD:main

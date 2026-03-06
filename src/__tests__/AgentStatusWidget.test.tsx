@@ -11,8 +11,8 @@ describe("AgentStatusWidget 리허설 🎹✨", () => {
     
     render(<AgentStatusWidget />);
     
-    expect(screen.getByText(/IDLE/)).toBeDefined();
-    expect(screen.getByText(/STANDBY_MODE/)).toBeDefined();
+    expect(screen.getAllByText(/IDLE/)[0]).toBeDefined();
+    expect(screen.getAllByText(/IDLE_MODE/)[0]).toBeDefined();
     expect(screen.getByText(/TESTING/)).toBeDefined();
   });
 
@@ -21,8 +21,8 @@ describe("AgentStatusWidget 리허설 🎹✨", () => {
     
     render(<AgentStatusWidget />);
     
-    expect(screen.getByText(/THINKING/)).toBeDefined();
-    expect(screen.getByText(/COGNITIVE_PROCESSING/)).toBeDefined();
+    expect(screen.getAllByText(/THINKING/i)[0]).toBeDefined();
+    expect(screen.getAllByText(/THINKING_MODE/)[0]).toBeDefined();
   });
 
   it("WORKING 상태일 때 시스템 실행 중임을 보여줘야 해요! ⚡🔵", () => {
@@ -30,7 +30,17 @@ describe("AgentStatusWidget 리허설 🎹✨", () => {
     
     render(<AgentStatusWidget />);
     
-    expect(screen.getByText(/WORKING/)).toBeDefined();
-    expect(screen.getByText(/SYSTEM_EXECUTION/)).toBeDefined();
+    expect(screen.getAllByText(/WORKING/i)[0]).toBeDefined();
+    expect(screen.getAllByText(/WORKING_MODE/)[0]).toBeDefined();
+  });
+
+  it("INTERMISSION 상태일 때 IDLE_MODE로 매핑해서 보여줘야 해요! 🍵", () => {
+    useMikuStore.setState({ status: "INTERMISSION", currentTask: "RESTING" });
+    
+    render(<AgentStatusWidget />);
+    
+    expect(screen.getAllByText(/IDLE/)[0]).toBeDefined();
+    expect(screen.getAllByText(/IDLE_MODE/)[0]).toBeDefined();
+    expect(screen.getByText(/RESTING/)).toBeDefined();
   });
 });

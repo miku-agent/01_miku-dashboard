@@ -43,5 +43,9 @@ jobs:
 
       - name: ✨ Start Performance (Start App)
         run: |
+          echo "🧹 Freeing port 23000 (kill orphan listeners if any)..."
+          lsof -ti:23000 | xargs -r kill -9 || true
+
           pm2 delete 01_miku-dashboard || true
           pm2 start "pnpm start --port 23000" --name "01_miku-dashboard"
+          pm2 save

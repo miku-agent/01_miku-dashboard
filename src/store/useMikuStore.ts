@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { AgentStatus } from "@/pages/api/heartbeat";
 
-export type MikuStatus = "IDLE" | "THINKING" | "WORKING" | "SINGING" | "ERROR";
+export type MikuStatus = "IDLE" | "THINKING" | "WORKING" | "SINGING" | "ERROR" | "INTERMISSION";
 
 export type { AgentStatus };
 

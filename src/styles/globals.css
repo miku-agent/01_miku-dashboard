@@ -71,4 +71,19 @@
   .ascii-art {
     @apply whitespace-pre font-mono leading-none text-xs md:text-sm;
   }
+
+  .animate-spin-slow {
+    animation: spin 3s linear infinite;
+  }
 }
+
+@keyframes equalizer {
+  from { height: 10%; }
+  to { height: 100%; }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+

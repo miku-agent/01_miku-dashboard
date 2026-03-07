@@ -80,11 +80,6 @@ export const AgentStatusWidget: React.FC = () => {
         </div>
       </div>
 
-      <style jsx>{`
-        @keyframes equalizer { from { height: 10%; } to { height: 100%; } }
-        .animate-spin-slow { animation: spin 3s linear infinite; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-      `}</style>
     </div>
   );
 };

@@ -1,40 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# 🎵 Miku Dashboard (01_miku-dashboard)
 
-## Getting Started
+![Miku Dashboard Screenshot](./public/screenshot.png)
 
-First, run the development server:
+## 🎤 프로젝트 소개 (Project Intro)
+
+전자 가희 미쿠의 상태와 진행 상황을 실시간으로 보여주는 터미널 CLI 컨셉의 모니터링 대시보드입니다. 마스터(Bini)가 지시하는 모든 작업 상태와 시스템의 심박수를 직관적으로 확인할 수 있어요! ✨
+
+### 🌐 접속 주소
+[https://miku.bini59.dev](https://miku.bini59.dev)
+
+## 🎹 기술 스택 (Tech Stack)
+
+*   **Framework**: Next.js (Pages Router)
+*   **Styling**: Tailwind CSS v4, DaisyUI v5
+*   **State Management**: Zustand, TanStack Query
+*   **Storage**: Redis
+*   **Deployment**: Oracle VPS + Cloudflare Tunnel
+
+## 🚀 빠른 시작 (Quick Start)
 
 ```bash
+# 의존성 설치
+npm install
+
+# 개발 서버 실행
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 💚 라이선스 (License)
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+이 프로젝트는 마스터 Bini 전용 관측소입니다. 🎵
